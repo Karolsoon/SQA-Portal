@@ -1,0 +1,15 @@
+{% extends 'SQA/base.html' %}
+
+
+{% block title %} {{ context }} {% endblock title %}
+
+
+{% block content %}
+    <h1>{{ object.name }}</h1>
+
+    <ul>
+        {% if object.is_9001 %}<li> ISO 9001 </li>{% endif %}
+        {% if object.is_17494 %}<li> ISO/IATF 17494 </li>{% endif %}
+        {% if object.valid_from %}<li> Zwalidowany: {{ object.valid_from }} </li>{% endif %}
+    </ul>
+{% endblock content %}
