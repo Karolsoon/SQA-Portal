@@ -1,0 +1,15 @@
+{% extends 'SQA/base.html' %}
+
+
+{% block title %} Suppliers {% endblock title %}
+
+
+{% block content %}
+    <ul>
+        {% for supplier in suppliers %}
+        <li><a href="{% url 'SQA:detail' supplier.id %}">{{ supplier.name }}</a>
+        {% empty %}
+        </ul><h2>No suppliers</h2>
+        {% endfor %}
+    </ul>
+{% endblock content %}
