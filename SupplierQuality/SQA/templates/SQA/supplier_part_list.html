@@ -1,0 +1,17 @@
+{% extends 'SQA/base.html' %}
+
+
+{% block title %} {{ context }} {% endblock title %}
+
+
+{% block content %}
+    <h1>Supplier Part List</h1>
+
+    <h2>{{ parts.supplier_t1 }}</h2>
+    <ul>
+        {% for part in parts %}
+        <li>{{ part }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

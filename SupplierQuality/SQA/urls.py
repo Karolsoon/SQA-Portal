@@ -21,6 +21,10 @@ urlpatterns = [
     path('', views.SQAIndexView.as_view(), name='index'),
     path('suppliers/', include([
         path('', views.SupplierListView.as_view(), name='list'),
-        path('<int:pk>/', views.SupplierDetailView.as_view(), name='detail')
+        path('<int:supplier_id>/', views.SupplierDetailView.as_view(), name='detail'),
+        path('<int:supplier_id>/parts', views.supplier_part_list, name="supplier_part_list")
+    ])),
+    path('parts/', include([
+        path('', views.PartListView.as_view(), name='part_list'),
     ])),
 ]

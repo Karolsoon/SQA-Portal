@@ -5,6 +5,7 @@
 
 
 {% block content %}
+    <h1> Supplier list </h1>
     <ul>
         {% for supplier in suppliers %}
         <li><a href="{% url 'SQA:detail' supplier.id %}">{{ supplier.name }}</a>

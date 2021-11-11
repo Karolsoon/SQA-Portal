@@ -1,4 +1,5 @@
-from enum import unique
+from datetime import timedelta
+import datetime
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField
@@ -46,10 +47,13 @@ class Part(models.Model):
     supplier_t1 = models.ForeignKey(Supplier_T1, on_delete=models.CASCADE)
     valid_from = models.DateField('validation date')
     is_valid = models.BooleanField(default=False)
-    requalification = models.DateField(valid_from)
 
     def __str__(self):
         return self.part_name
+
+    def requalification(self):
+        return self.valid_from + datetime.timedelta(days=365)
+
 
 class PPAP(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
