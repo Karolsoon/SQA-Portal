@@ -22,9 +22,13 @@ urlpatterns = [
     path('suppliers/', include([
         path('', views.SupplierListView.as_view(), name='list'),
         path('<int:supplier_id>/', views.SupplierDetailView.as_view(), name='detail'),
-        path('<int:supplier_id>/parts', views.supplier_part_list, name="supplier_part_list")
     ])),
     path('parts/', include([
         path('', views.PartListView.as_view(), name='part_list'),
+        path('<int:part_id>', views.PartDetailView.as_view(), name="part_detail")
     ])),
+    path('claims/', include([
+        path('', views.ClaimListView.as_view(), name='claim_list'),
+        path('<int:claim_id>/', views.ClaimDetailView.as_view(), name='claim_detail')
+    ]))
 ]

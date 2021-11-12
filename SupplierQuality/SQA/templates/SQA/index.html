@@ -3,6 +3,17 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block content %}
-    <h1> Index </h1>
-    <a href="{% url 'SQA:list' %}">Supplier list</a>
+    <article class="container">
+        <section class="overview">
+            <h1> Dashboard </h1>
+            <a href="{% url 'SQA:list' %}">Supplier list</a>
+        </section>
+
+        <section class="details">
+        {{ claims }}<br>
+        {{ ppaps }}<br>
+            for claim in claims if jakis ktok due do 5 dni<br>
+            taka tabela ze wszystkimi danymi z reklamachi zgodnie z tabelą zamieszczoną w bazie danych
+        </section>
+    </article>
 {% endblock content %}

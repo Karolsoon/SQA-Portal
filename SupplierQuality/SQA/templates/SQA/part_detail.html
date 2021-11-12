@@ -1,0 +1,33 @@
+{% extends 'SQA/base.html' %}
+
+
+{% block title %} {{ object.name }} {% endblock title %}
+
+
+{% block content %}
+    <h1>Part detail</h1>
+
+    <h2>{{ object.part_name }}</h2>
+    <ul>
+        <li>{{ object.part_number}}</li>
+        <li>Supplier: {{ object.supplier_t1 }}</li>
+    </ul>
+
+    {% if object.ppap %}
+    <h2> PPAP </h2>
+    <ul>
+        <h3>PPAP number</h3>
+        <li>{{ object.ppap.number }}</li>
+        <h3>Validation</h3>
+        {% if object.ppap.validated %}
+        <li>YES</li>
+        <li>Date: {{ object.papp.valid_from }}</li>
+        {% else %}
+        <li>Not validated</li>
+        {% endif %}
+    </ul>
+    {% else %}
+    <h2> No PPAP available </h2>
+    {% endif %}
+
+{% endblock content %}

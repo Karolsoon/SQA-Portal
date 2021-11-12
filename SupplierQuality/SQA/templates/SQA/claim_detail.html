@@ -1,0 +1,25 @@
+{% extends 'SQA/base.html' %}
+
+
+{% block title %} {{ object.name }} {% endblock title %}
+
+
+{% block content %}
+    <h1>Supplier detail</h1>
+
+    <h2>{{ claim.number }}</h2>
+    {% if claim.closed %}
+    <ul class="claim_open">
+    {% else %}
+    <ul class="claim_open">
+    {% endif %}
+        <li>{{ claim.supplier_t1 }}</li>
+        <li>Date claimed: {{ claim.created }}</li>
+        {% if claim.closed %}
+        <li>Closed</li>
+        {% else %}
+        <li>Open</li>
+        {% endif %}
+    </ul>
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'SQA/base.html' %}
+
+
+{% block title %} {{ object.name }} {% endblock title %}
+
+
+{% block content %}
+    <h1>Supplier detail</h1>
+
+    <h2>{{ supplier.name }}</h2>
+    <ul>
+        {% if supplier.is_9001 %}<li> ISO 9001 </li>{% endif %}
+        {% if supplier.is_17494 %}<li> ISO/IATF 17494 </li>{% endif %}
+        {% if supplier.valid_from %}<li> Validated on: {{ supplier.valid_from }} </li>{% endif %}
+    </ul>
+
+    {% if parts %}
+    <h2>Parts</h2>
+    <ul>
+        {% for part in parts %}
+        <li><a href="{% url 'SQA:part_detail' part.id %}">{{ part.part_name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if claims %}
+    <h2>Open claims</h2>
+    <ul>
+            {% for claim in claims %}
+            {% if not claim.closed %}
+            <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
+            {% endif %}
+            {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock content %}

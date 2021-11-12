@@ -1,3 +1,43 @@
-* {
-    color:red;
+html, body {
+ width: 100%;
+ font: Verdana;
 }
+
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 50px;
+}
+
+.overview {
+    box-sizing: border-box;
+    width: 30%;
+    padding-left: 50px;
+    border-left: 2px solid goldenrod;
+    display: inline-block;
+}
+
+.overview h1 {
+    font-size: 25px;
+}
+
+.details {
+    box-sizing: border-box;
+    width: 65%;
+    padding-left: 50px;
+    border-left: 2px solid goldenrod;
+    display: inline-block;
+    align-content: stretch;
+}
+
+
+@media screen and (max-width: 500px) {
+    .dashboard .details {
+      display: block;
+      text-align: left;
+    }
+    .header-right {
+      float: none;
+    }
+  }

@@ -8,7 +8,7 @@
     <h1> Part list </h1>
     <ul>
         {% for part in parts %}
-        <li>{{ part.part_name }}</a></li>
+        <li><a href="{% url 'SQA:part_detail' part.id %}">{{ part.part_name }}</a></li>
         {% empty %}
         </ul><h2>No parts</h2>
         {% endfor %}
