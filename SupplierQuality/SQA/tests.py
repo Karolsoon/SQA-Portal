@@ -3,11 +3,12 @@ from django.urls import reverse, resolve
 from django.utils import timezone
 import datetime
 
-from SQA.views import SQAIndexView, SupplierListView, SupplierDetailView, PartListView, PartDetailView, ClaimListView, ClaimDetailView
+from SQA.views import (SQAIndexView, SupplierListView, SupplierDetailView, PartListView, PartDetailView,
+                    ClaimListView, ClaimDetailView, PPAPListView, PPAPDetailView)
 from SQA.models import Supplier_T1, Subassembly, Part, PPAP, Claim, User
 
-class TestUrls(SimpleTestCase):
 
+class TestUrls(SimpleTestCase):
 
     def test_index_url_is_resolved(self):
         url = reverse('SQA:index')
@@ -35,7 +36,15 @@ class TestUrls(SimpleTestCase):
 
     def test_claim_detail_url_is_resolved(self):
         url = reverse('SQA:claim_detail', args=['1'])
-        self.assertEquals(resolve(url).func.view_class, ClaimDetailView)   
+        self.assertEquals(resolve(url).func.view_class, ClaimDetailView)
+
+    def test_ppap_list_url_is_resolved(self):
+        url = reverse('SQA:ppap_list')
+        self.assertEquals(resolve(url).func.view_class, PPAPListView)   
+
+    def test_ppap_detail_url_is_resolved(self):
+        url = reverse('SQA:ppap_detail', args=['1'])
+        self.assertEquals(resolve(url).func.view_class, PPAPDetailView)  
 
 
 class TestViews(TestCase):
@@ -59,24 +68,43 @@ class TestViews(TestCase):
         self.claim_detail_url_404 = reverse('SQA:claim_detail', args=['5'])
         
         self.test_supplier = Supplier_T1.objects.create(
-            name='Test_supplier', valid_from=self.test_date,
-            is_9001=True, is_17494=True, id=1
+            name='Test_supplier',
+            valid_from=self.test_date,
+            is_9001=True,
+            is_17494=True,
+            id=1
         )
         self.test_part = Part.objects.create(
-            part_name='Test_part', part_number='test_number', supplier_t1=self.test_supplier,
-            is_produced=False, id=1
+            part_name='Test_part',
+            part_number='test_number',
+            supplier_t1=self.test_supplier,
+            is_produced=False,
+            id=1
         )
         self.test_user = User.objects.create(
             username='Bobek'
         )
         self.test_ppap = PPAP.objects.create(
-            number='test PPAP', part_id=self.test_part, quantity=1, revision='A',
-            validated=True, valid_from=self.test_date, is_valid=True, id=1
+            number='test PPAP',
+            part_id=self.test_part,
+            quantity=1,
+            revision='A',
+            validated=True,
+            valid_from=self.test_date,
+            is_valid=True,
+            id=1
         )
         self.test_claim = Claim.objects.create(
-            number='8D XX-Test', part_id=self.test_part, supplier_number='test claim', quantity=10,
-            created=self.test_date, created_by=self.test_user,
-            closed=False, closed_on=None, supplier_t1=self.test_supplier, id=1
+            number='8D XX-Test',
+            part_id=self.test_part,
+            supplier_number='test claim',
+            quantity=10,
+            created=self.test_date,
+            created_by=self.test_user,
+            closed=False,
+            closed_on=None,
+            supplier_t1=self.test_supplier,
+            id=1
         )
     
     def test_index_GET(self):
@@ -131,3 +159,10 @@ class TestViews(TestCase):
         response = self.client.get(self.claim_detail_url_404)
 
         self.assertEquals(response.status_code, 404)
+
+
+    class TestModels(TestCase):
+
+        def setUp(self):
+            pass
+        

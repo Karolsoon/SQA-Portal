@@ -68,7 +68,7 @@ class PartListView(ListView):
     template_name = 'SQA/part_list.html'
 
     def get_context_data(self, **kwargs):
-        return {'parts': self.get_queryset()}
+        return {'parts': self.get_queryset().select_related() }
 
 
 class PartDetailView(DetailView):
@@ -96,7 +96,7 @@ class PPAPListView(ListView):
     template_name = 'SQA/ppap_list.html'
 
     def get_context_data(self, **kwargs):
-        return {'ppaps': self.get_queryset()}
+        return {'ppaps': self.get_queryset().select_related()}
 
 
 class PPAPDetailView(DetailView):

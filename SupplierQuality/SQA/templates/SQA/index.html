@@ -10,10 +10,46 @@
         </section>
 
         <section class="details">
-        {{ claims }}<br>
-        {{ ppaps }}<br>
-            for claim in claims if jakis ktok due do 5 dni<br>
-            taka tabela ze wszystkimi danymi z reklamachi zgodnie z tabelą zamieszczoną w bazie danych
+        <h2>Pending PPAP</h2>
+        <table width=800>
+            <tr>
+                <td>PPAP no.</td>
+                <td>Part name</td>
+                <td>Part number</td>
+                <td>Part revision</td>
+            </tr>
+        {% for ppap in ppaps %}
+            <tr>
+                <td><a href="{% url 'SQA:ppap_detail' ppap.id %}">{{ ppap.number }}</a></td>
+                <td>{{ ppap.part_id.part_name }}</td>
+                <td>{{ ppap.part_id.part_number }}</td>
+                <td>{{ ppap.revision }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        <br>
+
+        <h2>Open claims</h2>
+        <table width=800>
+            <tr>
+                <td>Claim no.</td>
+                <td>Supplier</td>
+                <td>Part number</td>
+                <td>Part name</td>
+                <td>Quantity</td>
+                <td>Opened on</td>
+            </tr>
+        {% for claim in claims %}
+            <tr>
+                <td><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></td>
+                <td>{{ claim.supplier_t1.name }}</td>
+                <td>{{ claim.part_id.part_number }}</td>
+                <td>{{ claim.part_id.part_name }}</td>
+                <td>{{ claim.quantity }}</td>
+                <td>{{ claim.created }}</td>
+            </tr>
+        {% endfor %}
+        </table>
         </section>
     </article>
 {% endblock content %}

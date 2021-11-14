@@ -5,7 +5,7 @@
 
 
 {% block content %}
-    <h1> Claim list </h1>
+    <h1> PPAP list </h1>
     <ul>
         {% for ppap in ppaps %}
         <li><a href="{% url 'SQA:ppap_detail' ppap.id %}">{{ ppap.number }}</a></li>
@@ -13,4 +13,6 @@
         </ul><h2>No pending ppap</h2>
         {% endfor %}
     </ul>
+
+    <h1>{{ pp }}</h1>
 {% endblock content %}
