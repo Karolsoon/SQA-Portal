@@ -15,7 +15,7 @@ class User(AbstractUser):
 
 class Supplier_T1(models.Model):
     name = models.CharField(max_length=60, unique=True, default='Tier1 Supplier')
-    valid_from = models.DateField(verbose_name='Supplier validated on', default=timezone.now())
+    valid_from = models.DateField(verbose_name='Supplier validated on', default=timezone.now)
     is_9001 = models.BooleanField(default=False)
     is_17494 = models.BooleanField(default=False)
 
@@ -62,7 +62,7 @@ class Claim(models.Model):
     part_id =models.ForeignKey(Part, on_delete=CASCADE, default=1)
     supplier_number = models.CharField(blank=True, max_length=50)
     quantity = models.IntegerField(default=1)
-    created = models.DateTimeField(verbose_name='Claim date', default=timezone.now())
+    created = models.DateTimeField(verbose_name='Claim date', default=timezone.now)
     created_by = models.ForeignKey(User, on_delete=CASCADE)
     closed = models.BooleanField(default=False)
     closed_on = models.DateTimeField(verbose_name='Claim closed on', blank=True, null=True)

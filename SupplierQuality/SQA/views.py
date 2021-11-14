@@ -47,11 +47,9 @@ class SupplierDetailView(View):
         if supplier_id:
             return Supplier_T1.objects.get(pk=supplier_id)
         if parts:
-            obj = Part.objects.all()
-            return obj.filter(supplier_t1=parts)
+            return Part.objects.filter(supplier_t1=parts)
         if claims:
-            obj = Claim.objects.all()
-            return obj.filter(supplier_t1=claims)
+            return Claim.objects.filter(supplier_t1=claims)
 
     #def get_context_data(self, **kwargs):
         """
