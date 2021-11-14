@@ -1,0 +1,18 @@
+{% extends 'SQA/base.html' %}
+
+
+{% block title %} {{ object.name }} {% endblock title %}
+
+
+{% block content %}
+    <h1>PPAP detail</h1>
+
+    <h2>{{ ppap.number }}</h2>
+    <ul>
+        <li>{{ ppap.part_number }}</li>
+        <li>{{ ppap.created }}</li>
+        <li>{{ ppap.revision }}</li>
+        <li>{{ ppap.valid_from }}</li>
+    </ul>
+
+{% endblock content %}

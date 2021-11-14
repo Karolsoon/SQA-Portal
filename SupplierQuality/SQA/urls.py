@@ -30,5 +30,9 @@ urlpatterns = [
     path('claims/', include([
         path('', views.ClaimListView.as_view(), name='claim_list'),
         path('<int:claim_id>/', views.ClaimDetailView.as_view(), name='claim_detail')
+    ])),
+    path('ppap/', include([
+        path('', views.PPAPListView.as_view(), name='ppap_list'),
+        path('<int:ppap_id>/', views.PPAPDetailView.as_view(), name='ppap_detail')
     ]))
 ]

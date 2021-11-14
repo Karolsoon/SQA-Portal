@@ -16,7 +16,6 @@ class SQAIndexView(TemplateView):
             'claims': query[1]
             })
 
-
     def get_queryset(self):
         ppaps = PPAP.objects.filter(validated=False)
         claims = Claim.objects.filter(closed=False)
@@ -40,16 +39,19 @@ class SupplierDetailView(View):
         return render(request, 'SQA/supplier_detail.html', {
             'supplier': self.get_queryset(supplier_id=supplier_id
             ), 'parts': self.get_queryset(parts=supplier_id
-            ), 'claims': self.get_queryset(claims=supplier_id)
-            })
+            ), 'claims': self.get_queryset(claims=supplier_id
+            ), 'ppaps:': self.get_queryset(ppaps=supplier_id
+            )})
 
-    def get_queryset(self, supplier_id=None, parts=None, claims=None):
+    def get_queryset(self, supplier_id=None, parts=None, claims=None, ppaps=None):
         if supplier_id:
-            return Supplier_T1.objects.get(pk=supplier_id)
+            return get_object_or_404(Supplier_T1, pk=supplier_id)
         if parts:
             return Part.objects.filter(supplier_t1=parts)
         if claims:
             return Claim.objects.filter(supplier_t1=claims)
+        if ppaps:
+            return PPAP.objects.filter(validated=True)
 
     #def get_context_data(self, **kwargs):
         """
@@ -87,3 +89,17 @@ class ClaimDetailView(DetailView):
     model = Claim
     template_name = 'SQA/claim_detail.html'
     pk_url_kwarg = 'claim_id'
+
+
+class PPAPListView(ListView):
+    model = PPAP
+    template_name = 'SQA/ppap_list.html'
+
+    def get_context_data(self, **kwargs):
+        return {'ppaps': self.get_queryset()}
+
+
+class PPAPDetailView(DetailView):
+    model = PPAP
+    template_name = 'SQA/ppap_detail.html'
+    pk_url_kwarg = 'ppap_id'

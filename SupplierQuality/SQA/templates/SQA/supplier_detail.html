@@ -33,4 +33,15 @@
             {% endfor %}
     </ul>
     {% endif %}
+
+    {% if ppaps %}
+    <h2>Open claims</h2>
+    <ul>
+            {% for claim in claims %}
+            {% if not claim.closed %}
+            <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
+            {% endif %}
+            {% endfor %}
+    </ul>
+    {% endif %}
 {% endblock content %}

@@ -90,7 +90,10 @@ class PPAP(models.Model):
     revision = models.CharField(max_length=20, default='0')
     validated = models.BooleanField(default=False)
     valid_from = models.DateField('validation date', null=True, blank=True)
-    is_valid = models.BooleanField('Part is validated',default=False)
+    is_valid = models.BooleanField('Part is validated', default=False)
 
     def __str__(self):
         return self.number
+
+
+#Make requalification class
