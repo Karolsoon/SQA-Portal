@@ -68,24 +68,22 @@ class Claim(models.Model):
     closed_on = models.DateTimeField(verbose_name='Claim closed on', blank=True, null=True)
     D3_open = models.BooleanField(default=True)
     D3_closed_on = models.DateTimeField('D3 closed on', blank=True, null=True)
+    D3_on_time = models.BooleanField(default=True)
     D6_open = models.BooleanField(default=True)
     D6_closed_on = models.DateTimeField('D6 closed on', blank=True, null=True)
+    D6_on_time = models.BooleanField(default=True)
     D8_open = models.BooleanField(default=True)
     D8_closed_on = models.DateTimeField('D8 closed on', blank=True, null=True)
+    D8_on_time = models.BooleanField(default=True)
 
     def give_claim_number(self):
-        #Count claims from current year
-        #assign next free number
-        #Start numbers from 1
-        #Represent number as 001
-        #Return in form 8D 21/001
-        pass
+        datetime.datetime.year
 
     def set_due_dates(self):
         if self.closed == False:
-            D3_date = self.created + datetime.timedelta(days=1)
-            D6_date = self.created + datetime.timedelta(days=14)
-            D8_date = self.created + datetime.timedelta(days=90)
+            D3_date = self.created + timezone.timedelta.days(1)
+            D6_date = self.created + timezone.timedelta.days(14)
+            D8_date = self.created + timezone.timedelta(days=90)
 
             return {'D3': D3_date, 'D6': D6_date, 'D8': D8_date}
         
@@ -93,20 +91,20 @@ class Claim(models.Model):
 
     def claim_status(self):
         duedate = self.set_due_dates()
-        if self.D3_closed_on != 0:
-            if duedate.D3 < datetime.datetime.now() and self.D3_open == True:
+        if self.D3_closed is None:
+            if duedate.D3 < timezone.now() and self.D3_open == True:
                 self.D3_on_time = False
             else:
                 self.D3_on_time = True
         
-        if self.D6_closed_on != 0:
-            if duedate.D6 < datetime.datetime.now() and self.D3_open == True:
+        if self.D6_closed_on is None:
+            if duedate.D6 < timezone.now() and self.D3_open == True:
                 self.D6_on_time = False
             else:
                 self.D6_on_time = True
 
-        if self.D8_closed_on != 0:
-            if duedate.D8 < datetime.datetime.now() and self.D3_open == True:
+        if self.D8_closed_on is None:
+            if duedate.D8 < timezone.now() and self.D3_open == True:
                 self.D8_on_time = False
             else:
                 self.D8_on_time = True
