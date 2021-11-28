@@ -104,7 +104,16 @@ class TestViews(TestCase):
             closed=False,
             closed_on=None,
             supplier_t1=self.test_supplier,
-            id=1
+            id=1,
+            D3_open=False,
+            D3_closed_on=timezone.now(),
+            D3_on_time=True,
+            D6_open=False,
+            D6_closed_on=timezone.now(),
+            D6_on_time=True,
+            D8_open=False,
+            D8_closed_on=timezone.now(),
+            D8_on_time=True
         )
     
     def test_index_GET(self):

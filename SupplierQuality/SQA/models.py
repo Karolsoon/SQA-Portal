@@ -66,7 +66,13 @@ class Claim(models.Model):
     created_by = models.ForeignKey(User, on_delete=CASCADE)
     closed = models.BooleanField(default=False)
     closed_on = models.DateTimeField(verbose_name='Claim closed on', blank=True, null=True)
-    
+    D3_open = models.BooleanField(default=True)
+    D3_closed_on = models.DateTimeField('D3 closed on', blank=True, null=True)
+    D6_open = models.BooleanField(default=True)
+    D6_closed_on = models.DateTimeField('D6 closed on', blank=True, null=True)
+    D8_open = models.BooleanField(default=True)
+    D8_closed_on = models.DateTimeField('D8 closed on', blank=True, null=True)
+
     def give_claim_number(self):
         #Count claims from current year
         #assign next free number
@@ -76,8 +82,36 @@ class Claim(models.Model):
         pass
 
     def set_due_dates(self):
-        #Return D3, D6, D8 dates
-        pass
+        if self.closed == False:
+            D3_date = self.created + datetime.timedelta(days=1)
+            D6_date = self.created + datetime.timedelta(days=14)
+            D8_date = self.created + datetime.timedelta(days=90)
+
+            return {'D3': D3_date, 'D6': D6_date, 'D8': D8_date}
+        
+        return 'Claim is closed'
+
+    def claim_status(self):
+        duedate = self.set_due_dates()
+        if self.D3_closed_on != 0:
+            if duedate.D3 < datetime.datetime.now() and self.D3_open == True:
+                self.D3_on_time = False
+            else:
+                self.D3_on_time = True
+        
+        if self.D6_closed_on != 0:
+            if duedate.D6 < datetime.datetime.now() and self.D3_open == True:
+                self.D6_on_time = False
+            else:
+                self.D6_on_time = True
+
+        if self.D8_closed_on != 0:
+            if duedate.D8 < datetime.datetime.now() and self.D3_open == True:
+                self.D8_on_time = False
+            else:
+                self.D8_on_time = True
+
+        
 
     def __str__(self):
         return self.number
