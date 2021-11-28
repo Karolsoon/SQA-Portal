@@ -131,3 +131,4 @@ dmypy.json
 #logo
 SupplierQuality/SQA/static/logo.png
 SupplierQuality/SQA/templates/SQA/boxes.html
+SupplierQuality/SQA/templates/SQA/calc.js

@@ -10,6 +10,12 @@
         </section>
 
         <section class="details">
+
+        {% if claims %}
+            <div class="charts">
+            {% include 'SQA/charts.html' %}
+            </div>
+        {% endif %}
         <h2>Pending PPAP</h2>
         <table width=800>
             <tr>

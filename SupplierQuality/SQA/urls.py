@@ -34,5 +34,8 @@ urlpatterns = [
     path('ppap/', include([
         path('', views.PPAPListView.as_view(), name='ppap_list'),
         path('<int:ppap_id>/', views.PPAPDetailView.as_view(), name='ppap_detail')
-    ]))
+    ])),
+
+    #TESTING
+    path('population-chart/', views.population_chart, name='population-chart'),
 ]
