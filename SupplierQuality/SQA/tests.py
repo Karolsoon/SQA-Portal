@@ -1,7 +1,11 @@
+from django.db.models.fields import DateTimeField
 from django.test import SimpleTestCase, TestCase, Client
 from django.urls import reverse, resolve
 from django.utils import timezone
+from django.utils.timezone import make_aware
+
 import datetime
+from SQA.models import Supplier_T1, Subassembly, Part, Claim, PPAP
 
 from SQA.views import (SQAIndexView, SupplierListView, SupplierDetailView, PartListView, PartDetailView,
                     ClaimListView, ClaimDetailView, PPAPListView, PPAPDetailView)
@@ -51,7 +55,7 @@ class TestViews(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.test_date = datetime.datetime(2020, 10, 12, 8, 0, 0, 0)
+        self.test_date = timezone.now()
 
         self.index_url = reverse('SQA:index')
         self.supplier_list_url = reverse('SQA:supplier_list')
@@ -95,17 +99,16 @@ class TestViews(TestCase):
             id=1
         )
         self.test_claim = Claim.objects.create(
-            number='8D XX-Test',
             part_id=self.test_part,
             supplier_number='test claim',
             quantity=10,
-            created=self.test_date,
+            created=timezone.now(),
             created_by=self.test_user,
             closed=False,
             closed_on=None,
             supplier_t1=self.test_supplier,
             id=1,
-            D3_open=False,
+            D3_open=True,
             D3_closed_on=timezone.now(),
             D3_on_time=True,
             D6_open=False,
@@ -170,8 +173,53 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 404)
 
 
-    class TestModels(TestCase):
+class TestModels(TestCase):
 
-        def setUp(self):
-            pass
-        
+    def setUp(self):
+        self.supplier1 = Supplier_T1.objects.create(
+            name='Test supplier',
+            valid_from=datetime.datetime.now(),
+            is_9001=True,
+            is_17494=False
+        )
+
+        self.subassembly1 = Subassembly.objects.create(
+            name='Subassy One',
+            part_number='Sub 1234 number',
+            part_name='Why do I need this'
+        )
+
+        self.part1 = Part.objects.create(
+            part_name='Part one',
+            part_number='Part 1234 number',
+            subassy=self.subassembly1,
+            supplier_t1=self.supplier1,
+            is_produced=True
+        )
+
+        self.user1 = User.objects.create(
+            username='Didi'
+        )
+
+        self.claim1 = Claim.objects.create(
+                supplier_t1 = self.supplier1,
+                part_id = self.part1,
+                supplier_number='Supplier 8D number',
+                quantity=10,
+                created=timezone.now(),
+                created_by=self.user1,
+                closed=True,
+                closed_on=timezone.now(),
+                D3_open=False,
+                D3_closed_on=timezone.now(),
+                D3_on_time=True,
+                D6_open=False,
+                D6_closed_on=timezone.now(),
+                D6_on_time=True,
+                D8_open=False,
+                D8_closed_on=timezone.now(),
+                D8_on_time=True
+        )
+    
+    def test_give_claim_number(self):
+        self.assertEquals(self.claim1.number, '8D 21/001')

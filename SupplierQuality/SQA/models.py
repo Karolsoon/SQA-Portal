@@ -57,13 +57,16 @@ class Part(models.Model):
 
 
 class Claim(models.Model):
-    supplier_t1 = models.ForeignKey(Supplier_T1, on_delete=CASCADE)
+    supplier_t1 = models.ForeignKey(
+        Supplier_T1, on_delete=CASCADE)
     number = models.CharField(max_length=10, unique=True, default='8D YY/XXX')
-    part_id =models.ForeignKey(Part, on_delete=CASCADE, default=1)
+    part_id =models.ForeignKey(
+        Part, on_delete=CASCADE, default=1)
     supplier_number = models.CharField(blank=True, max_length=50)
     quantity = models.IntegerField(default=1)
     created = models.DateTimeField(verbose_name='Claim date', default=timezone.now)
-    created_by = models.ForeignKey(User, on_delete=CASCADE)
+    created_by = models.ForeignKey(
+        User, on_delete=CASCADE)
     closed = models.BooleanField(default=False)
     closed_on = models.DateTimeField(verbose_name='Claim closed on', blank=True, null=True)
     D3_open = models.BooleanField(default=True)
@@ -76,8 +79,12 @@ class Claim(models.Model):
     D8_closed_on = models.DateTimeField('D8 closed on', blank=True, null=True)
     D8_on_time = models.BooleanField(default=True)
 
-    def give_claim_number(self):
-        datetime.datetime.year
+    def save(self, *args, **kwargs):
+        claims = Claim.objects.filter(created__year=self.created.year)
+        post_count = claims.count() + 1
+        self.number = f'8D {str(self.created.year)[2:4]}/{post_count:003}'
+        super().save(*args, **kwargs)
+        
 
     def set_due_dates(self):
         if self.closed == False:
@@ -88,6 +95,12 @@ class Claim(models.Model):
             return {'D3': D3_date, 'D6': D6_date, 'D8': D8_date}
         
         return 'Claim is closed'
+
+# Make the claim status (or separate function) to update
+# the "D3_open" and "D3_on_time" automaticly
+# ALSO - validation error handling model.clean() method
+# CHECK THIS IN THE DOCUMENTATION
+# https://docs.djangoproject.com/en/3.2/ref/models/instances/
 
     def claim_status(self):
         duedate = self.set_due_dates()
