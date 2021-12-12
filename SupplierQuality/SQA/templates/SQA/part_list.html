@@ -5,13 +5,20 @@
 
 
 {% block content %}
-    <h1> Part list </h1>
-    <ul>
-        {% for part in parts %}
-        <li><a href="{% url 'SQA:part_detail' part.id %}">{{ part.part_name }}</a></li>
-        {% empty %}
-        </ul><h2>No parts</h2>
-        {% endfor %}
-    </ul>
+<div class="container">
+    <div class="overview">
+        <h1> Part list </h1>
+        <ul>
+            {% for part in parts %}
+            <li><a href="{% url 'SQA:part_detail' part.id %}">{{ part.part_name }}</a></li>
+            {% empty %}
+            </ul><h2>No parts</h2>
+            {% endfor %}
+        </ul>
+    </div>
 
+    <div class="details">
+
+    </div>
+</div>
 {% endblock content %}

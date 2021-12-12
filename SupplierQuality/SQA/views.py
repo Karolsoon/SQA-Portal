@@ -42,6 +42,7 @@ class SupplierDetailView(View):
     def get(self, request, supplier_id):
         print(supplier_id)
         return render(request, 'SQA/supplier_detail.html', {
+            'suppliers': Supplier_T1.objects.all(),
             'supplier': self.get_queryset(supplier_id=supplier_id
             ), 'parts': self.get_queryset(parts=supplier_id
             ), 'claims': self.get_queryset(claims=supplier_id
@@ -81,6 +82,13 @@ class PartDetailView(DetailView):
     template_name = 'SQA/part_detail.html'
     pk_url_kwarg = 'part_id'
 
+    def get(self, request, part_id):
+        return render(request, 'SQA/part_detail.html', {
+            'ppaps': PPAP.objects.filter(part_id=part_id).all(),
+            'parts': Part.objects.all(),
+            'this_part': Part.objects.filter(pk=part_id)
+        })
+
 
 class ClaimListView(ListView):
     model = Claim
@@ -95,6 +103,12 @@ class ClaimDetailView(DetailView):
     template_name = 'SQA/claim_detail.html'
     pk_url_kwarg = 'claim_id'
 
+    def get(self, request, claim_id):
+        return render(request, 'SQA/claim_detail.html', {
+            'claims': Claim.objects.all(),
+            'claim': Claim.objects.filter(pk=claim_id)
+        })
+
 
 class PPAPListView(ListView):
     model = PPAP
@@ -108,6 +122,13 @@ class PPAPDetailView(DetailView):
     model = PPAP
     template_name = 'SQA/ppap_detail.html'
     pk_url_kwarg = 'ppap_id'
+
+
+    def get(self, request, ppap_id):
+        return render(request, 'SQA/ppap_detail.html', {
+            'ppaps': PPAP.objects.all(),
+            'ppap': PPAP.objects.filter(pk=ppap_id)
+        })
 
 # TESTING
 def population_chart(request):

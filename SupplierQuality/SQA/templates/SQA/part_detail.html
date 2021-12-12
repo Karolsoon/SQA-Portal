@@ -5,29 +5,71 @@
 
 
 {% block content %}
-    <h1>Part detail</h1>
+<div class="container">
+    <div class="overview">
+        <h1> Part list </h1>
+        <ul>
+            {% for part in parts %}
+            <li><a href="{% url 'SQA:part_detail' part.id %}">{{ part.part_name }}</a></li>
+            {% empty %}
+            </ul><h2>No parts</h2>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <h2>{{ object.part_name }}</h2>
-    <ul>
-        <li>{{ object.part_number}}</li>
-        <li>Supplier: {{ object.supplier_t1 }}</li>
-    </ul>
+    <div class="details">
+        <h1>Part detail (part revision missing)</h1>
+        <table>
+            <tr>
+                <td>Supplier</td>
+                <td>Part name</td>
+                <td>Part number</td>
+                <td>Subassemlby</td>
+                <td>In production</td>
+            </tr>
+            <tr>
+                <td><a href="{% url 'SQA:supplier_detail' this_part.0.supplier_t1.id %}">{{ this_part.0.supplier_t1 }}</a></td>
+                <td>{{ this_part.0.part_name }}</td>
+                <td>{{ this_part.0.part_number }}</td>
+                <td>{{ this_part.0.subassy }}</td>
+                <td>{{ this_part.0.is_produced }}</td>
+            </tr>
+        </table>
 
-    {% if object.ppap %}
-    <h2> PPAP </h2>
-    <ul>
-        <h3>PPAP number</h3>
-        <li>{{ object.ppap.number }}</li>
-        <h3>Validation</h3>
-        {% if object.ppap.validated %}
-        <li>YES</li>
-        <li>Date: {{ object.papp.valid_from }}</li>
+        <h1>{{ ppap }}</h1>
+
+        {% if ppaps %}
+        <h2> Related PPAP </h2>
+        <table>
+            <tr>
+                <td>PPAP no.</td>
+                <td>Part revision</td>
+                <td>Quantity</td>
+                <td>Validated</td>
+                <td>Valid from</td>
+                <td>In production</td>
+            </tr>
+        {% for ppap in ppaps%}
+            <tr>
+                <td><a href="{% url 'SQA:ppap_detail' ppap.id %}">{{ ppap.number }}</a></td>
+                <td>{{ ppap.revision }}</td>
+                <td>{{ ppap.quantity }}</td>
+                <td>
+                    {% if ppap.validated %}
+                    Yes
+                    {% else %}
+                    No
+                    {% endif %}
+                </td>
+                <td>{{ ppap.valid_from }}</td>
+                <td>{{ ppap.is_valid }}</td>
+            </tr>
+        {% endfor %}
+        </table>
         {% else %}
-        <li>Not validated</li>
+        <h2> No PPAP available </h2>
         {% endif %}
-    </ul>
-    {% else %}
-    <h2> No PPAP available </h2>
-    {% endif %}
+    </div>
+</div>
 
 {% endblock content %}

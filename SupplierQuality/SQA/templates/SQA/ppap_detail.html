@@ -5,14 +5,31 @@
 
 
 {% block content %}
-    <h1>PPAP detail</h1>
+<div class="container">
+    <div class="overview">
+        <h1> PPAP list </h1>
+        <ul>
+            {% for ppap in ppaps %}
+            <li><a href="{% url 'SQA:ppap_detail' ppap.id %}">{{ ppap.number }}</a></li>
+            {% empty %}
+            </ul><h2>No parts</h2>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <h2>{{ ppap.number }}</h2>
-    <ul>
-        <li>{{ ppap.part_number }}</li>
-        <li>{{ ppap.created }}</li>
-        <li>{{ ppap.revision }}</li>
-        <li>{{ ppap.valid_from }}</li>
-    </ul>
+    <div class="details">   
+        <h1>PPAP detail</h1>
+
+        <h2>{{ ppap.0.number }}</h2>
+        <ul>
+            <li><a href="{% url 'SQA:part_detail' ppap.0.part_id.id %}">{{ ppap.0.part_id.part_number }}</a></li>
+            <li>{{ ppap.0.number }}</li>
+            <li>{{ ppap.0.quantity }}</li>
+            <li>{{ ppap.0.revision }}</li>
+            <li>{{ ppap.0.valid_from }}</li>
+            <li>{{ ppap.0.is_valid }}</li>
+        </ul>
+    </div>
+</div>
 
 {% endblock content %}

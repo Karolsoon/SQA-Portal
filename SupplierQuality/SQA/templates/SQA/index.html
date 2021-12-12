@@ -3,13 +3,13 @@
 {% block title %} Dashboard {% endblock title %}
 
 {% block content %}
-    <article class="container">
-        <section class="overview">
+    <div class="container">
+        <div class="overview">
             <h1> Dashboard </h1>
             <a href="{% url 'SQA:supplier_list' %}">Supplier list</a>
-        </section>
+        </div>
 
-        <section class="details">
+        <div class="details">
 
         {% if claims %}
             <div class="charts">
@@ -17,7 +17,8 @@
             </div>
         {% endif %}
         <h2>Pending PPAP</h2>
-        <table width=800>
+        <hr>
+        <table>
             <tr>
                 <td>PPAP no.</td>
                 <td>Part name</td>
@@ -36,7 +37,8 @@
         <br>
 
         <h2>Open claims</h2>
-        <table width=800>
+        <hr>
+        <table>
             <tr>
                 <td>Claim no.</td>
                 <td>Supplier</td>
@@ -56,6 +58,6 @@
             </tr>
         {% endfor %}
         </table>
-        </section>
-    </article>
+        </div>
+    </div>
 {% endblock content %}

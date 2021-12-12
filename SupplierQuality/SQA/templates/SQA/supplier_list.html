@@ -5,12 +5,20 @@
 
 
 {% block content %}
-    <h1> Supplier list </h1>
-    <ul>
-        {% for supplier in suppliers %}
-        <li><a href="{% url 'SQA:supplier_detail' supplier.id %}">{{ supplier.name }}</a>
-        {% empty %}
-        </ul><h2>No suppliers</h2>
-        {% endfor %}
-    </ul>
+<div class="container">
+    <div class="overview">
+        <h1> Supplier list </h1>
+        <ul>
+            {% for supplier in suppliers %}
+            <li><a href="{% url 'SQA:supplier_detail' supplier.id %}">{{ supplier.name }}</a>
+            {% empty %}
+            </ul><h2>No suppliers</h2>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="details">
+
+    </div>
+</div>
 {% endblock content %}

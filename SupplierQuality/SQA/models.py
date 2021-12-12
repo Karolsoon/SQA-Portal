@@ -59,7 +59,7 @@ class Part(models.Model):
 class Claim(models.Model):
     supplier_t1 = models.ForeignKey(
         Supplier_T1, on_delete=CASCADE)
-    number = models.CharField(max_length=10, unique=True, default='8D YY/XXX')
+    number = models.CharField(max_length=10, unique=True, blank=True)
     part_id =models.ForeignKey(
         Part, on_delete=CASCADE, default=1)
     supplier_number = models.CharField(blank=True, max_length=50)
@@ -80,6 +80,9 @@ class Claim(models.Model):
     D8_on_time = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
+        """
+        Assigns claim number to Claim.number in the '8D YY/XXX' format
+        """
         claims = Claim.objects.filter(created__year=self.created.year)
         post_count = claims.count() + 1
         self.number = f'8D {str(self.created.year)[2:4]}/{post_count:003}'
@@ -93,8 +96,12 @@ class Claim(models.Model):
             D8_date = self.created + timezone.timedelta(days=90)
 
             return {'D3': D3_date, 'D6': D6_date, 'D8': D8_date}
-        
+
         return 'Claim is closed'
+
+    def check_due_dates(self):
+        duedates = self.set_due_dates()
+
 
 # Make the claim status (or separate function) to update
 # the "D3_open" and "D3_on_time" automaticly

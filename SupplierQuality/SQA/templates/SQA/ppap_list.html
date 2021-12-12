@@ -5,14 +5,21 @@
 
 
 {% block content %}
-    <h1> PPAP list </h1>
-    <ul>
-        {% for ppap in ppaps %}
-        <li><a href="{% url 'SQA:ppap_detail' ppap.id %}">{{ ppap.number }}</a></li>
-        {% empty %}
-        </ul><h2>No pending ppap</h2>
-        {% endfor %}
-    </ul>
+<div class="container">
+    <div class="overview">
+        <h1> PPAP list </h1>
+        <ul>
+            {% for ppap in ppaps %}
+            <li><a href="{% url 'SQA:ppap_detail' ppap.id %}">{{ ppap.number }}</a></li>
+            {% empty %}
+            </ul><h2>No pending ppap</h2>
+            {% endfor %}
+        </ul>
+    </div>
 
+    <div class="details">
+
+    </div>
+</div>
     <h1>{{ pp }}</h1>
 {% endblock content %}

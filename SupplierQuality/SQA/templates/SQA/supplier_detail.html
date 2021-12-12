@@ -5,43 +5,59 @@
 
 
 {% block content %}
-    <h1>Supplier detail</h1>
-
-    <h2>{{ supplier.name }}</h2>
-    <ul>
-        {% if supplier.is_9001 %}<li> ISO 9001 </li>{% endif %}
-        {% if supplier.is_17494 %}<li> ISO/IATF 17494 </li>{% endif %}
-        {% if supplier.valid_from %}<li> Validated on: {{ supplier.valid_from }} </li>{% endif %}
-    </ul>
-
-    {% if parts %}
-    <h2>Parts</h2>
-    <ul>
-        {% for part in parts %}
-        <li><a href="{% url 'SQA:part_detail' part.id %}">{{ part.part_name }}</a></li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    {% if claims %}
-    <h2>Open claims</h2>
-    <ul>
-            {% for claim in claims %}
-            {% if not claim.closed %}
-            <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
-            {% endif %}
+<div class="container">
+    <div class="overview">
+        <h1> Supplier list </h1>
+        <ul>
+            {% for supplier in suppliers %}
+            <li><a href="{% url 'SQA:supplier_detail' supplier.id %}">{{ supplier.name }}</a>
+            {% empty %}
+            </ul><h2>No suppliers</h2>
             {% endfor %}
-    </ul>
-    {% endif %}
+        </ul>
+    </div>
 
-    {% if ppaps %}
-    <h2>Open claims</h2>
-    <ul>
-            {% for claim in claims %}
-            {% if not claim.closed %}
-            <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
-            {% endif %}
+    <div class="details">
+
+        <h1>Supplier detail</h1>
+
+        <h2>{{ supplier.name }}</h2>
+        <ul>
+            {% if supplier.is_9001 %}<li> ISO 9001 </li>{% endif %}
+            {% if supplier.is_17494 %}<li> ISO/IATF 17494 </li>{% endif %}
+            {% if supplier.valid_from %}<li> Validated on: {{ supplier.valid_from }} </li>{% endif %}
+        </ul>
+
+        {% if parts %}
+        <h2>Parts</h2>
+        <ul>
+            {% for part in parts %}
+            <li><a href="{% url 'SQA:part_detail' part.id %}">{{ part.part_name }}</a></li>
             {% endfor %}
-    </ul>
+        </ul>
+        {% endif %}
+
+        {% if claims %}
+        <h2>Open claims</h2>
+        <ul>
+                {% for claim in claims %}
+                {% if not claim.closed %}
+                <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
+                {% endif %}
+                {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if ppaps %}
+        <h2>Open claims</h2>
+        <ul>
+                {% for claim in claims %}
+                {% if not claim.closed %}
+                <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
+                {% endif %}
+                {% endfor %}
+        </ul>
+    </div>
+</div>
     {% endif %}
 {% endblock content %}

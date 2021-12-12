@@ -5,12 +5,19 @@
 
 
 {% block content %}
-    <h1> Claim list </h1>
-    <ul>
-        {% for claim in claims %}
-        <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
-        {% empty %}
-        </ul><h2>No pending claims</h2>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <div class="overview">
+            <h1> Claim list </h1>
+            <ul>
+                {% for claim in claims %}
+                <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
+                {% empty %}
+                </ul><h2>No pending claims</h2>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="details">
+            {% include 'SQA/charts.html' %}
+        </div>
 {% endblock content %}

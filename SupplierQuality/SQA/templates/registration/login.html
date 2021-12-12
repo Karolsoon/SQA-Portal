@@ -1,0 +1,40 @@
+{% extends "registration/base_auth.html" %}
+
+
+{% block content %}
+{% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+  
+    <section class="container">
+        <div class="logo">
+            <img src="/static/logo.png" width="400px">
+            <h2>Sanden Manufacturing Poland</h2>
+            <h3>Supplier Quality Portal</h3>
+        </div>
+
+  <form method="post" action="{% url 'login' %}" class="formcontainer">
+    {% csrf_token %}
+    <ul>
+        <li>{{ form.username.label_tag }}</li>
+        <li>{{ form.username }}</li>
+        <li>{{ form.password.label_tag }}</li>
+        <li>{{ form.password }}</li>
+    </ul>
+    <input type="submit" value="Sign in" id="loginbutton" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+  </form>
+</section>
+
+  {# Assumes you setup the password_reset view in your URLconf #}
+{% endblock content %}

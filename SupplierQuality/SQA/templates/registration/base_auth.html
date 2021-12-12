@@ -6,13 +6,9 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{% block title %}{% endblock title %}</title>
         {% block style %} {% endblock style %}
-        <link rel="stylesheet" href="{% static 'dashboard.css' %}">
-        <link rel="stylesheet" href="{% static 'navbar.css' %}">
+        <link rel="stylesheet" href="{% static 'auth.css' %}">
     </head>
     <body>
-            <section class="navbar-container">
-            {% include 'SQA/_navbar.html' %}
-            </section>
-            {% block content %}{% endblock content %}
+        {% block content %}{% endblock content %}
     </body>
 </html>

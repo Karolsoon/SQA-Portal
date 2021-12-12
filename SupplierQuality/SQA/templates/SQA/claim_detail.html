@@ -5,21 +5,34 @@
 
 
 {% block content %}
-    <h1>Claim detail</h1>
+<div class="container">
+    <div class="overview">
+        <h1>Claim list</h1>
+        <ul>
+            {% for claim in claims %}
+            <li><a href="{% url 'SQA:claim_detail' claim.id %}">{{ claim.number }}</a></li>
+            {% empty %}
+            </ul><h2>No pending claims</h2>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <h2>{{ claim.number }}</h2>
-    {% if claim.closed %}
-    <ul class="claim_open">
-    {% else %}
-    <ul class="claim_open">
-    {% endif %}
-        <li>{{ claim.supplier_t1 }}</li>
-        <li>Date claimed: {{ claim.created }}</li>
-        {% if claim.closed %}
-        <li>Closed</li>
+    <div class="details">
+        <h1>Claim detail</h1>
+
+        <h2>{{ claim.0.number }}</h2>
+        {% if claim.0.closed %}
+        <ul class="claim_open">
         {% else %}
-        <li>Open</li>
+        <ul class="claim_open">
         {% endif %}
-    </ul>
+            <li>{{ claim.0.supplier_t1 }}</li>
+            <li>Date claimed: {{ claim.0.created }}</li>
+            {% if claim.0.closed %}
+            <li>Closed</li>
+            {% else %}
+            <li>Open</li>
+            {% endif %}
+        </ul>
 
 {% endblock content %}

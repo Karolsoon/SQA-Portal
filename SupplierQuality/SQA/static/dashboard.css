@@ -1,38 +1,72 @@
+* {
+  box-sizing: border-box;
+}
+
 html, body {
  width: 100%;
  font: Verdana;
+ margin-top: 0;
 }
 
 .container {
-    box-sizing: border-box;
-    width: 100%;
-    margin-bottom: 10px;
-    margin-top: 50px;
+    display: flex;
+    padding-top: 2rem;
+
+    margin: auto;
+    width: 60rem;
 }
 
 .overview {
-    box-sizing: border-box;
-    width: 30%;
-    padding-left: 50px;
-    border-left: 2px solid goldenrod;
     display: inline-block;
+    text-align: right;
+    margin-right: 2px;
+    padding-right: 3rem;
+    margin-top: 2rem;
+    width: 15rem;
 }
 
 .overview h1 {
+    margin: 0 auto;
     font-size: 25px;
+    color: rgb(219, 169, 99, .85);
+}
+
+.overview li {
+  margin-left: 2rem;
+  list-style: none;
+}
+
+.overview > a {
+  text-decoration-style: none;
 }
 
 .details {
-    box-sizing: border-box;
-    width: 65%;
-    padding-left: 50px;
-    border-left: 2px solid goldenrod;
-    display: inline-block;
-    align-content: stretch;
+    padding-left: 3rem;
+    max-width: 1000px;
+    border-left: solid 1px rgb(73, 171, 232);
+}
+
+.details table {
+  padding: 5px;
+  width: 100%;
+}
+
+.details td tr {
+  padding: 50px;
+}
+
+.details td {
+  height: 1.5rem;
+  width: 8rem;
+}
+
+hr {
+  color: rgb(73, 171, 232);
 }
 
 
-@media screen and (max-width: 500px) {
+
+@media screen and (max-width: 400px) {
     .dashboard .details {
       display: block;
       text-align: left;
