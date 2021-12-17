@@ -1,6 +1,9 @@
+* {
+  font-family: apparat-light;
+}
+
 html, body {
  width: 100%;
- font: Verdana;
  margin: 0;
  background-color: rgb(241, 241, 248);
 }
